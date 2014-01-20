@@ -1,0 +1,88 @@
+\documentclass[10pt, a4paper]{article}
+\usepackage{lrec2006}
+\usepackage{graphicx}
+
+\title{Publishing and Linking WordNet using lemon and RDF}
+
+\name{John P. M\textsuperscript{c}Crae\textsuperscript{*}, Christiane Fellbaum\textsuperscript{$\dagger$} and Philipp Cimiano\textsuperscript{*}}
+
+\address{ \textsuperscript{*}University Bielefeld, \textsuperscript{$\dagger$}Princeton University \\
+               CITEC Building, Inspiration 1, 33615 Bielefeld; 35 Olden Street, Princeton \\
+               \{jmccrae, cimiano\}@cit-ec.uni-bielefeld.de, fellbaum@princeton.edu \\}
+
+
+\abstract{Each article must include an abstract of 150 to 200 words in Times 9 pt with interlinear spacing of 10 pt.
+ The heading Abstract should be centred, font Times 10 bold. This short abstract will also be used for printing a Booklet of Abstracts 
+containing the abstracts of all papers presented at the Conference. \\ \newline \Keywords{keyword A, keyword B, keyword C}}
+
+
+
+\begin{document}
+
+\maketitleabstract
+
+\section{Introduction}
+
+WordNet is one the first and still most widely used resources for natural
+language processing. In the time since the first version of WordNet was released many
+resources have been produced that represent complementary information\cite{?,?} or extend
+the WordNet model to new languages\cite{?,?}. In contrast, in recent years we have seen
+the development of Web Technologies for the representation of language resources
+and in particular, the use of linked data. This has lead to a linguistic linked
+open data cloud, which is constructed by linking resources and publishing them
+on the web using RDF. Linked data, as proposed by Berners-Lee\cite{?}, has four
+main principles for publishing data: firstly, the use of URIs to identify
+objects; secondly, that these URIs should be resolvable; thirdly, that semantic
+information is returned, using standards such as RDF and finally, that links are
+provided to other resources. Chiarcos~\emph{et al.}\cite{?} discuss the
+application of this to linguistic data and show that this model has notable
+advantages over standard approaches to data modelling, in particular they
+outline the following:
+
+\begin{enumerate}
+    \item Representation: Graph-based models are a method that can represent any
+        form of language resource.
+    \item Structural interoperability: By using RDF graphs and URIs datasets can
+        be merged with no effort.
+    \item Federation: Multiple datasets can easily be drawn from different
+        sources in the web and used together seamlessly.
+    \item Conceptual interoperability: Linking to common data category
+        repositories allows common definitions to be inferred.
+    \item Ecosystem: Building on standards such as RDF, allows the use of common
+        tools, including databases.
+    \item Dynamic import: Data on the web is not static and as such errors can
+        be corrected after publication.
+    \item Expressivity: The use of other Semantic Web models allows the easy
+        expression of metadata, provenance and ontological constraints on the
+        data
+\end{enumerate}
+
+In this paper we describe our experience
+in publishing WordNet following the linked data principles. While this is not
+the first version of WordNet to be published as linked data~\cite{?, ?, ?}, this
+version has several advantages, firstly that it is well-linked to many
+resources, secondly it uses an open model in \emph{lemon} and finally, that as
+it is integrated with the development of WordNet, and as such will be updated alongside
+future releases of WordNet.
+
+\section{Background}
+
+\subsection{WordNet}
+
+\subsection{lemon}
+
+\subsection{Linguistic Linked Data}
+
+\section{Representing WordNets with lemon}
+
+\section{Linking WordNet}
+
+\section{Related Work}
+
+\section{Conclusion}
+
+\bibliographystyle{lrec2006}
+\bibliography{rdf-wordnet}
+
+\end{document}
+
