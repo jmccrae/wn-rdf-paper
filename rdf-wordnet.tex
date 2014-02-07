@@ -8,9 +8,9 @@
 
 \title{Publishing and Linking WordNet using Lemon and RDF}
 
-\name{John P. M\textsuperscript{c}Crae\textsuperscript{*}, Christiane Fellbaum\textsuperscript{$\dagger$} and Philipp Cimiano\textsuperscript{*}}
+\name{John P. M\textsuperscript{c}Crae\textsuperscript{$\diamondsuit$}, Christiane Fellbaum\textsuperscript{$\clubsuit$} and Philipp Cimiano\textsuperscript{$\diamondsuit$}}
 
-\address{ \textsuperscript{*}University Bielefeld, \textsuperscript{$\dagger$}Princeton University \\
+\address{ \textsuperscript{$\diamondsuit$}University Bielefeld, \textsuperscript{$\clubsuit$}Princeton University \\
                CITEC Building, Inspiration 1, 33615 Bielefeld, Germany; 35 Olden Street, Princeton, USA \\
                \{jmccrae, cimiano\}@cit-ec.uni-bielefeld.de, fellbaum@princeton.edu \\}
 
@@ -21,7 +21,7 @@
     their linking as part of the Linguistic Linked Open Data Cloud.
     Furthermore, this is the first version to use
     the \lemon{} model and we describe how we represent WordNet with this model.
-\\ \newline \Keywords{dataset description, WordNet, linked data}}
+\\ \newline \Keywords{dataset description, language resources, lexicon, ontology, WordNet, linked data}}
 
 
 \begin{document}
@@ -52,7 +52,10 @@ in publishing WordNet following the linked data principles and using the \lemon{
 the first version of WordNet to be published as linked data~\cite{van2006conversion,mccrae2012integrating,graves2006data}, our 
 version has several advantages: firstly that it is well-linked to many
 resources, secondly that it uses an open model, \emph{lemon}, and most importantly that 
-it is directly hosted by Princeton and will thus directly be automatically in synch with further releases of WordNet.
+it is directly hosted by Princeton and will thus directly be automatically in sync with further releases of WordNet. 
+As such we intend that this data, will provide a central point of linking for
+not only many WordNets in many languages, thus enabling the visions of a Global
+WordNet Grid~\cite{pease2008building}, but also for many other kinds of lexical resources. 
 
 \section{Background}
 
@@ -60,7 +63,7 @@ it is directly hosted by Princeton and will thus directly be automatically in sy
 
 WordNet~\cite{miller1995wordnet,fellbaum1998wordnet,fellbaum2010wordnet} is a large lexical database of English nouns,
 verbs, adjectives and adverbs. Word forms are grouped into more than 117,000 sets of
-(rougly) synonymous word forms, so called \emph{synsets}. These are interconnected by bidirectional
+(roughly) synonymous word forms, so called \emph{synsets}. These are interconnected by bidirectional
 arcs that stand for lexical (word-word) and semantic (synset-synset) relations, including
 hyper/hyponymy (\emph{tree-oak}), meronymy (\emph{tree-branch}), antonymy
 (\emph{long-short}) and various entailment relations (\emph{buy-pay, show-see, untie-
@@ -74,8 +77,8 @@ been built for some 100 different languages. Most are mapped onto the Princeton
 WordNet, enabling translation on the lexical level as well as cross-lingual WSD and
 applications. WordNet continues to evolve both in terms of coverage and representation
 of meaning. Recent enhancements include the addition of internet language and partially
-compositional multi­word­units. Finally, WordNet has been mapped to formal ontologies, 
-including SUMO~\cite{niles2003mapping} and KYOTO~\cite{vossen2011kyoto}.
+compositional multi word units. Finally, WordNet has been mapped to formal ontologies, 
+including SUMO~\cite{niles2003mapping} and KYOTO~\cite{vossen2014kyoto}.
 
 \subsection{lemon}
 
@@ -143,15 +146,9 @@ advantages over standard approaches to data modelling, in particular the followi
 \end{figure}
 
 
-\begin{figure*}
-\begin{verbatim}
-http://wordnet-rdf.princeton.edu/wn31/cat-n
-http://wordnet-rdf.princeton.edu/wn31/cat-n#CanonicalForm
-http://wordnet-rdf.princeton.edu/wn31/cat-n#2-n
-http://wordnet-rdf.princeton.edu/wn31/00001740-a
-\end{verbatim}
-\caption{URI scheme of RDF WordNet\label{uri-examples}}
-\end{figure*}
+%\begin{figure*}
+%\caption{URI scheme of RDF WordNet\label{uri-examples}}
+%\end{figure*}
 
 \begin{table}
   \begin{tabular}{p{50mm}|c}
@@ -169,7 +166,7 @@ http://wordnet-rdf.princeton.edu/wn31/00001740-a
 \end{table}
 
 It is not trivial to apply \lemon{} to the case of a WordNet as there is no
-clear ontology.
+clear ontology in WordNet.
 Clearly, WordNet's 
 words can be regarded as \lemon{} lexical entries and the word senses correspond
 well to the \lemon{}'s lexical senses. WordNet has lemmas and a separate list of
@@ -198,7 +195,7 @@ We do not follow previous exports such as~\cite{van2006conversion} in assigning 
 but instead attempt to use the existing identifiers in WordNet. Furthermore, as
 WordNet has released several versions and is still under development, we consider it 
 important to include the version number in the URI. As such, we use the
-following scheme for URIs, as exemplified in figure \ref{uri-examples}:
+following scheme for URIs:, as exemplified below:
 
 \begin{itemize}
   \item Each lexical entry is represented by means of the URL-encoded lemma and
@@ -213,6 +210,16 @@ following scheme for URIs, as exemplified in figure \ref{uri-examples}:
       include an extra initial digit for part-of-speech} `offset' code from the WordNet
     database, followed by a dash and the part of speech as a single letter.
 \end{itemize}
+
+Examples of this scheme include:
+
+{\scriptsize
+\begin{verbatim}
+http://wordnet-rdf.princeton.edu/wn31/cat-n
+http://wordnet-rdf.princeton.edu/wn31/cat-n#CanonicalForm
+http://wordnet-rdf.princeton.edu/wn31/cat-n#2-n
+http://wordnet-rdf.princeton.edu/wn31/300001740-a
+\end{verbatim}}
 
 
 A Python framework based on RDFlib\footnote{\url{https://github.com/RDFLib/rdflib}} is used to serve the website and
