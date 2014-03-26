@@ -6,12 +6,12 @@
 
 \newcommand{\lemon}[0]{\emph{lemon}}
 
-\title{Publishing and Linking WordNet using Lemon and RDF}
+\title{Publishing and Linking WordNet using lemon and RDF}
 
 \name{John P. M\textsuperscript{c}Crae\textsuperscript{$\diamondsuit$}, Christiane Fellbaum\textsuperscript{$\clubsuit$} and Philipp Cimiano\textsuperscript{$\diamondsuit$}}
 
-\address{ \textsuperscript{$\diamondsuit$}University Bielefeld, \textsuperscript{$\clubsuit$}Princeton University \\
-               CITEC Building, Inspiration 1, 33615 Bielefeld, Germany; 35 Olden Street, Princeton, USA \\
+\address{ \textsuperscript{$\diamondsuit$}University Bielefeld, 
+               CITEC Building, Inspiration 1, Bielefeld, Germany\\ \textsuperscript{$\clubsuit$}Princeton University, 35 Olden Street, Princeton, USA \\
                \{jmccrae, cimiano\}@cit-ec.uni-bielefeld.de, fellbaum@princeton.edu \\}
 
 
@@ -35,7 +35,7 @@ language processing. From the time since the first version of WordNet was releas
 resources have been produced that represent complementary information to WordNet~\cite{schuler2005verbnet,baker1998berkeley}
 or extend it to other languages~\cite{vossen1998eurowordnet,bond2013linking}. 
 Meanwhile, new Web technologies, in particular Linked Data, have fostered the publication of data on the Web.
-This has lead to the emergence of a so called \emph{Linguistic Linked Open Data (LLOD)} cloud in which resources and datasets are represented in RDF format and linked to each other.
+This has lead to the emergence of a so called \emph{Linguistic Linked Open Data (LLOD)} cloud~\cite{chiarcos2011towards} in which resources and datasets are represented in RDF format and linked to each other.
 Linked data, as proposed by \cite{berners2011linked}, has four
 main principles for publishing data: firstly, that it relies on URIs to identify
 objects; secondly, that these URIs should be resolvable; thirdly, that semantic
@@ -71,7 +71,7 @@ tie}).
 
 WordNet's synsets and its network structure yield a rough measure of semantic similarity
 among words and concepts in terms of synset membership as well as the number of arcs
-separating synsets. Consequently, WordNet has become a popular tool for Word Sense
+separating synsets. As all this information was made available under and open license, WordNet has become a popular tool for Word Sense
 Disambiguation (WSD) and Natural Language Processing in general. WordNets have
 been built for around 100 different languages. Most are mapped onto the Princeton
 WordNet, enabling translation on the lexical level as well as cross-lingual WSD and
@@ -100,7 +100,10 @@ models lexicons by means of a core consisting of the following elements:
 In fact, in previous work~\cite{eckle2014lemonuby} \lemon{} has been used not only to
 represent WordNet but to integrate it with more syntactically sophisticated
 resources such as VerbNet. As such \lemon{} shows potential to help in the
-integration of lexical data across many levels and languages.
+integration of lexical data across many levels and languages. The \lemon{} model
+is highly compatible with the ISO standard LMF~\cite{francopoulo2006lexical} and
+forms the basis of the work of the W3C OntoLex Community
+Group\footnote{\url{http://www.w3.org/community/ontolex}}.
 
 \subsection{Linguistic Linked Data}
 
@@ -111,7 +114,7 @@ diagram showing all the linguistic resources available on Linguistic Linked Open
 
 There are many key advantages to the use
 of this technology for language resources; however the cloud has until now
-lacked a central node. As WordNet is the most widely referenced language
+lacked a central point of reference. As WordNet is the most widely referenced language
 resource, we believe that WordNet can act as a nucleus for linguistic linked data
 in the way that DBpedia~\cite{auer2007dbpedia} has for the wider cloud.
 
@@ -184,7 +187,10 @@ properties rather than attempt to relate them to existing ontological
 properties such as OWL's subClassOf. In order to capture the new properties, we
 introduce an ontology\footnote{\url{http://wordnet-rdf.princeton.edu/ontology}}
 describing the new properties and classes and provide
-axioms for the use in the context of both \lemon{} and SKOS. Furthermore, we
+axioms for the use in the context of both \lemon{} and SKOS. These axioms including
+stating transitivity constraints and equivalence to other vocabularies, e.g., WordNet's 
+\emph{hypernym} to SKOS's \emph{broader}.
+Furthermore, we
 link the elements in the ontology to data categories from
 ISOcat~\cite{kemps2008isocat} following the guidelines
 of~\cite{windhouwer2012linking}.
@@ -232,8 +238,8 @@ we include the following elements:
   \item For verbs, we include mappings to VerbNet~\cite{schuler2005verbnet} if they exist. As
     VerbNet does not currently have a linked data version, we link to the
     PHP page of the web site.
-  \item We include translations from the Open Multilingual WordNet~\cite{bond2013linking}
-    collection as simple labels on the synsets, identified by the use of
+  \item We include translations from Open Multilingual WordNet~\cite{bond2013linking}
+    as simple labels on the synsets, identified by the use of
     language codes.
   \item We have included previous mappings to LexVo~\cite{de2008language} 
     using the current identifiers in WordNet.
@@ -244,13 +250,14 @@ we include the following elements:
 In addition to these links, we provide support for legacy resources by
 adding URL mappings from previous versions of WordNet identifiers to the most
 recent version, with mappings based on \cite{daude2000mapping}. The number of
-triples in the resource can be seen in table~\ref{triple_counts} and an example
-of the data is illustrated in figure~\ref{modelling_example}.
+triples in the resource and an example can be seen in table~\ref{triple_counts} and 
+figure~\ref{modelling_example}. We intend to continue to expand this linksets
+with contributions from the community.
 
 \section{Related Work}
 
 This work does not represent the first version of WordNet published in RDF. Previous versions
-include the one by van Assem et al. \cite{van2006conversion} as well as McCrae et al. \cite{mccrae2012integrating}. Furthermore, WordNet has been
+include the one by van Assem et al. \shortcite{van2006conversion} as well as McCrae et al. \shortcite{mccrae2012integrating}. Furthermore, WordNet has been
 incorporated into various larger resources including
 BabelNet~\cite{navigli2010babelnet,ehrmann2014} and 
 UBY~\cite{gurevych2012uby,eckle2014lemonuby}. These projects however have mostly
@@ -259,17 +266,17 @@ as more related to the task of providing universal identifiers for words as in t
 ongoing work of the Global WordNet Grid~\cite{pease2008building}.  
 
 There have been a number of attempts to interlink WordNets. 
-\cite{pease2009formal} used an upper-level ontology called SUMO to group WordNet
+Pease and Fellbaum \shortcite{pease2009formal} used an upper-level ontology called SUMO to group WordNet
 concepts and these mappings are adopted by several language versions of WordNet.
 Similarly, attempts were made to integrate WordNets based around the Kyoto
 Ontology and LMF~\cite{soria2009wordnet}. Finally, the SemLink
 project~\cite{palmer2009semlink} has
 developed links among several resources, though it is not yet integrated into
-the linked data cloud.
+the linked data cloud. 
 
 \section{Conclusion}
 
-We have described a Linked Data version of Princeton WordNet that is expressed in RDF and linked to other relevant resources and furthermore is directly sychronized with the WordNet project.
+We have described a Linked Data version of Princeton WordNet that is expressed in RDF and linked to other relevant resources and is directly sychronized with the WordNet project.
 Furthermore, we have discussed
 the use of the \lemon{} model to describe a WordNet and ameliorate the
 integration of not just other WordNets but also a wide variety of lexical
