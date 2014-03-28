@@ -133,7 +133,8 @@ advantages over standard approaches to data modelling, in particular the followi
         repositories supports interoperability.
         \item Ecosystem: Building on standards such as RDF supports the use of common
         tools, including databases.
-    \item Dynamic publishing: Data on the web is not static, such that different versions can be exposed and errors can be corrected.    \item Expressivity: The use of other Semantic Web models allows the easy
+    \item Dynamic publishing: Data on the web is not static, such that different versions can be exposed and errors can be corrected.   
+    \item Expressivity: The use of other Semantic Web models allows the easy
         expression of metadata, provenance and ontological constraints on the
         data.
 \end{enumerate}
@@ -203,18 +204,27 @@ following scheme for URIs:, as exemplified below:
 \begin{itemize}
   \item Each lexical entry is represented by means of the URL-encoded lemma and
     then a dash followed by the part-of-speech as a single letter (i.e., `n(oun)',
-    `v(erb)', `a(djective)', `r (adverb)', `adjective s(atellite)' or `p(article)'), e.g. \url{http://wordnet-rdf.princeton.edu/wn31/cat-n}.   
+    `v(erb)', `a(djective)', `r (adverb)', `adjective s(atellite)' or `p(article)').
     
   \item Senses and forms in the model use the entry URI and add a fragment identifier. For forms for which there is no previous identifier in WordNet, we
     use {\tt CanonicalForm} and {\tt Form-n} where {\tt n} is a number.
     For senses, the fragment is the index of the senses and the part of
-    speech, e.g. \url{http://wordnet-rdf.princeton.edu/wn31/cat-n#2-n}.
+    speech.
   \item Synsets are similarly are identified by a number consisting of 8 or 9 digits corresponding to offset codes in the WordNet database\footnote{The 9 figure codes
-      include an extra initial digit for part-of-speech}, followed by a dash and the part of speech as a single letter, e.g. \url{http://wordnet-rdf.princeton.edu/wn31/300001740-a}.
+      include an extra initial digit for part-of-speech}, followed by a dash and the part of speech as a single letter.
 \end{itemize}
+Examples of this scheme include:
+ 
+ {\scriptsize
+\begin{verbatim}
+http://wordnet-rdf.princeton.edu/wn31/cat-n
+http://wordnet-rdf.princeton.edu/wn31/cat-n#CanonicalForm
+http://wordnet-rdf.princeton.edu/wn31/cat-n#2-n
+http://wordnet-rdf.princeton.edu/wn31/300001740-a
+\end{verbatim}}
 
-A Python framework based on RDFlib\footnote{\url{https://github.com/RDFLib/rdflib}} is used to serve the website and
-provide SPARQL access to the data.
+%A Python framework based on RDFlib\footnote{\url{https://github.com/RDFLib/rdflib}} is used to serve the website and
+%provide SPARQL access to the data.
 
 \section{Linking WordNet}
 
