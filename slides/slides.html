@@ -6,8 +6,8 @@
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <meta http-equiv="Content-Style-Type" content="text/css" />
   <meta name="generator" content="pandoc" />
-  <meta name="author" content="John McCrae" />
-  <title>Ontology-lexica with lemon</title>
+  <meta name="author" content="♣John McCrae, ♦Christian Fellbaum, ♣Philipp Cimiano" />
+  <title>Publishing and Linking WordNet using lemon and RDF</title>
   <style type="text/css">code{white-space: pre;}</style>
   <link rel="stylesheet" type="text/css" media="screen, projection, print"
     href="http://www.w3.org/Talks/Tools/Slidy2/styles/slidy.css" />
@@ -76,10 +76,10 @@
   
   .leftcol { float:left;max-width:50%; }
   .rightcol { float:right;max-width:48%; }
-  .rightcol img { padding-top:50px;padding-right:200px; }
+  .rightcol img { padding-top:50px;padding-right:200px;max-width:90%;}
   
   </style>
-  <meta name="copyright" content="Linked Data for Language Technologies - Tutorial at LREC-2014">
+  <meta name="copyright" content="Publishing and Linking WordNet using lemon and RDF">
   <script type="text/javascript">
   window.onload = function() {
   var background_slide = document.createElement("div");
@@ -97,563 +97,11 @@
 </head>
 <body>
 <div class="slide titlepage">
-  <h1 class="title">Ontology-lexica with <em>lemon</em></h1>
+  <h1 class="title">Publishing and Linking WordNet using <em>lemon</em> and RDF</h1>
   <p class="author">
-John M<sup>c</sup>Crae
+♣John M<sup>c</sup>Crae, ♦Christian Fellbaum, ♣Philipp Cimiano
   </p>
-  <p class="date">Semantic Computing Group, University of Bielefeld</p>
-</div>
-<div id="problem" class="slide section level1">
-<h1>Problem</h1>
-<ul>
-<li>Ontologies have become popular.</li>
-<li>Use several formalisms: RDFS, OWL, F-Logic, etc.</li>
-<li>Ontologies do not have much linguistic information.</li>
-</ul>
-<pre>
-:Cat a owl:Class ;
-  rdfs:label "cat"@eng ;
-  rdfs:label "Katze"@deu .
-</pre>
-
-<ul>
-<li>What is the plural? Easy for English, not for German</li>
-</ul>
-</div>
-<div id="ontologies" class="slide section level1">
-<h1>Ontologies</h1>
-<div>
-    
-Take a word:
-</div>
-<div style="position:relative;left:300px;padding:30px;">    
-<em>“edema”</em>
-</div>
-<div>
-    
-And it means something, so we put it in an ontology and give it an identifier (URI):
-</div>
-<div style="position:relative;left:150px;padding:30px;">
-<code>http://dbpedia.org/resource/Edema</code>
-</div>
-<div style="position:relative;left:500px;padding:30px;">
-<code>http://de.dbpedia.org/resource/\Ödem</code>
-</div>
-<div>
-    
-In fact it (already) has lots of identifiers linked on the web
-</div>
-<div style="position:relative;left:50px;padding:30px;">    
-<span style="padding:30px;"> <code>mesh:D004487</code> </span> <span style="padding:30px;"> <code>icd10:R60.9</code> </span> <span style="padding:30px;"> <code>umls:C0013604</code> </span>
-</div>
-
-</div>
-<div id="ontologies-1" class="slide section level1">
-<h1>Ontologies</h1>
-<div class="leftcol">
-<ul>
-<li>We can describe the entity with </li>
-<li>Relationships to entities in other ontologies</li>
-<li>Use reasoning to infer equivalence</li>
-<li>All done with the “Web Ontology Language” (OWL)</li>
-<li>Published by W3C in 2002; version 2 in 2008
-</div>
-<div class="rightcol">
-<img src="img/owl.png" />
-</div>
-</li>
-</ul>
-</div>
-<div id="ontology-labels" class="slide section level1">
-<h1>Ontology labels</h1>
-<div>    
-Concepts may be identified by many words
-</div>
-<div style="padding:30px;">
-<span style="padding:30px;"> <em>“edema”</em> </span> <span style="padding:30px;"> <em>“edemata”</em> </span> <span style="padding:30px;"> <em>“dropsy”</em> </span>
-</div>
-<div>
-<ul>
-<li>These are all labels for the same ontology concept</li>
-<li>No differentiation</li>
-<li>Cannot say which are plural, which not
-</div>
-</li>
-</ul>
-</div>
-<div id="inflection-and-synonyms" class="slide section level1">
-<h1>Inflection and Synonyms</h1>
-<div>
-    
-We could introduce an element for each word:
-</div>
-<div class="hbox">
-<img src="img/ex-ll.png" />
-</div>
-
-</div>
-<div id="skos-xl" class="slide section level1">
-<h1>SKOS-XL</h1>
-<ul>
-<li>Similar to SKOS-XL
-<ul>
-<li>eXtended Labels for the Simple Knowledge Organization System</li>
-<li>W3C Recommendation since 2009</li>
-</ul></li>
-<li>SKOS-XL does not allow multiple forms of the same label
-<ul>
-<li>No grouping of “edema” and “edemata”</li>
-</ul></li>
-<li>“We [TopQuadrant] have yet to hear a use case that cannot be supported by SKOS alone” (<a href="http://topquadrantblog.blogspot.de/2012/07/who-needs-skos-xl-maybe-no-one.html" class="cite">Who need SKOS-XL? Maybe no-one. (Polikoff, 2013)</a>)</li>
-</ul>
-</div>
-<div id="forms" class="slide section level1">
-<h1>Forms</h1>
-<div>
-But such a distinction is only useful if we can say why:
-</div>
-<div style="padding:30px;position:relative;left:100px;">
-<span style="padding:30px;"> <em>“edema”</em> (<strong>singular</strong>) </span> <span style="padding:30px;"> <em>“edemata”</em> (<strong>plural</strong>) </span>
-</div>
-<div>
-Hence, forms are also nodes:
-</div>
-<div class="hbox">
-<img src="img/ex-lemon-forms.png" />
-</div>
-
-
-</div>
-<div id="senses" class="slide section level1">
-<h1>Senses</h1>
-<div>
-Sometimes we wish to say something about why a particular word is used
-</div>
-<div style="padding:30px;position:relative;left:100px;">
-<span style="padding:30px;"> <em>“edema”</em> (<strong>modern</strong>) </span> <span style="padding:30px;"> <em>“dropsy”</em> (<strong>antiquated</strong>) </span>
-</div>
-<div>
-Hence we introduce a sense to describe the usage of a word with a given meaning
-</div>
-<div class="hbox">
-<img src="img/ex-lemon-senses.png" />
-</div>
-
-</div>
-<div id="the-core-of-lemon" class="slide section level1">
-<h1>The core of <em>lemon</em></h1>
-<div class="hbox">
-<img src="img/core2.png" alt="lemon Core" />
-</div>
-
-</div>
-<div id="so...-what-is-a-ontology-lexicon" class="slide section level1">
-<h1>So..., what is a (ontology-)lexicon?</h1>
-<ul>
-<li>A lexicon is a collection of lexical information</li>
-<li>We do not need to define semantics within the lexicon</li>
-<li>“An ontology-based semantic lexicon would leave the semantics to the ontology, focusing instead on providing domain-specific terms and object descriptions in the ontology.” (Buitelaar, 2010)</li>
-</ul>
-</div>
-<div id="dictionaries-as-lexica" class="slide section level1">
-<h1>Dictionaries as lexica</h1>
-<ul>
-<li>In fact, a lexicon represents much of the information already found in a dictionary</li>
-<li>That is words, their forms and their meaning</li>
-<li>Must be machine-readable</li>
-<li>Take Wiktionary as an example</li>
-</ul>
-</div>
-<div id="wiktionary-as-a-lexicon" class="slide section level1">
-<h1>Wiktionary as a lexicon</h1>
-<div class="figure">
-<img src="img/Screenshot.png" alt="A Wiktionary entry" /><p class="caption">A Wiktionary entry</p>
-</div>
-</div>
-<div id="wiktionary-as-a-lexicon-1" class="slide section level1">
-<h1>Wiktionary as a lexicon</h1>
-<div class="figure">
-<img src="img/Screenshot-topleft.png" />
-</div>
-</div>
-<div id="wiktionary-as-a-lexicon-2" class="slide section level1">
-<h1>Wiktionary as a lexicon</h1>
-<div class="figure">
-<img src="img/Screenshot-bot.png" />
-</div>
-</div>
-<div id="wiktionary-as-a-lexicon-3" class="slide section level1">
-<h1>Wiktionary as a lexicon</h1>
-<div class="figure">
-<img src="img/Screenshot-topright.png" />
-</div>
-</div>
-<div id="lemons-origins" class="slide section level1">
-<h1><em>lemon</em>'s origins</h1>
-<div class="leftcol">
-<ul>
-<li>Lexical Markup Framework (ISO 24613)
-<ul>
-<li>Standard for representing lexicons</li>
-<li>XML</li>
-</ul></li>
-<li>LexInfo, LIR
-<ul>
-<li>Represent lexical information relative to an ontology</li>
-<li>OWL</li>
-</ul></li>
-<li>SKOS (W3C Standard)
-<ul>
-<li>Designed for Taxonomy/Vocabulary representation</li>
-<li>RDF
-</div>
-<div class="rightcol">
-<img src="img/lemon-family-tree.png" alt="The lemon Family Tree" />
-</div>      
-</li>
-</ul></li>
-</ul>
-</div>
-<div id="design-goals" class="slide section level1">
-<h1>Design goals</h1>
-<ul>
-<li>RDF(S)</li>
-<li>Conciseness</li>
-<li>Not prescriptive
-<ul>
-<li>i.e., uses data categories</li>
-</ul></li>
-<li>Semantics by reference
-<ul>
-<li>i.e., uses ontologies</li>
-</ul></li>
-<li>Extensible</li>
-</ul>
-</div>
-<div id="why-lemon-rdfs" class="slide section level1">
-<h1>Why <em>lemon</em>: RDF(S)</h1>
-<div class="leftcol">
-<ul>
-<li>RDF models are labelled directed graphs
-<ul>
-<li>Allows for smarter representation</li>
-</ul></li>
-<li>Each entry has a URI
-<ul>
-<li>Queriable on the web using standards</li>
-<li>Clear responsibility for data</li>
-</ul></li>
-<li>Linking possible between different lexica
-<ul>
-<li>Reuse of lexicon data</li>
-</ul></li>
-<li>Some induction possible (subproperties, classes etc.)
-</div>
-<div class="rightcol">
-<img src="img/rdf.png" />
-</div>
-</li>
-</ul>
-</div>
-<div id="why-lemon-conciseness" class="slide section level1">
-<h1>Why <em>lemon</em>: Conciseness</h1>
-<div class="leftcol">
-<ul>
-<li>Small models (i.e., fewer links, fewer kB)</li>
-<li>Easier to understand</li>
-<li>&quot;Open-world&quot;: Not necessary to state all facts
-<ul>
-<li>Multiple points of view
-</div>
-<div class="rightcol">
-<img src="img/3d_minimalism.png" />
-</div>
-</li>
-</ul></li>
-</ul>
-</div>
-<div id="why-lemon-semantics-by-reference" class="slide section level1">
-<h1>Why <em>lemon</em>: Semantics by Reference</h1>
-<div class="leftcol">
-<ul>
-<li>Meaning of a word given by reference</li>
-<li>Reference (generally an ontology) capable of representing more complex semantic information</li>
-<li>Disambiguation is performed relative to the ontology</li>
-<li>No (traditional) word senses
-<ul>
-<li>No clashing of word senses in cross-lingual mappings
-</div>
-<div class="rightcol">
-<img src="img/relation.png" />
-</div>
-</li>
-</ul></li>
-</ul>
-</div>
-<div id="why-lemon-modular-and-extensible" class="slide section level1">
-<h1>Why <em>lemon</em>: Modular and extensible</h1>
-<div class="leftcol">
-<ul>
-<li>RDF(S) extensibility allows representation of
-<ul>
-<li>Subtle differences</li>
-<li>Unexpected data categories</li>
-</ul></li>
-<li>Modularity
-<ul>
-<li>Different modules for different user requirements</li>
-<li>New modules can be added later without affecting core
-</div>
-<div class="rightcol">
-<img src="img/modular.png" />
-</div>
-
-</li>
-</ul></li>
-</ul>
-</div>
-<div id="modules" class="slide section level1">
-<h1>Modules</h1>
-<div class="shbox">
-<img src="img/lemon-modules.png" />
-</div>
-
-
-</div>
-<div id="grammatical-description" class="slide section level1">
-<h1>Grammatical Description</h1>
-<div class="leftcol">
-<p>We can annotate a lexical entry by adding propeties, e.g.,</p>
-<pre>
-ex:Katze lexinfo:partOfSpeech lexinfo:noun ;
-  lexinfo:gender lexinfo:feminine .
-
-lexinfo:feminine dcr:datcat
-  <http://isocat.org/datcat/DC-247> .
-
-lexinfo:noun dcr:datcat
-  <http://isocat.org/datcat/DC-1333> .
-</pre>
-</div>
-<div class="rightcol">
-<img src="img/description1.png" style="width:95%;"/>
-</div>
-
-
-</div>
-<div id="grammatical-decomposition" class="slide section level1">
-<h1>Grammatical Decomposition</h1>
-<pre>
-ex:SwineFlu lemon:sense ex:SwineFlu_Sense ;
-  lexinfo:head ex:Flu .
-ex:Flu lemon:sense ex:Flu_Sense .
-ex:SwineFlu_Sense lemon:reference dbpedia:Swine_influenza .
-ex:Flu_Sense lemon:reference dbpedia:Influenza .
-
-dbpedia:Influenza dct:subject category:Influenza .
-dbpedia:Swine_influenza dct:subject category:Influenza .
-</pre>
-
-<div class="figure">
-<img src="img/description2.png" />
-</div>
-<!--%\frame{
-%# Decomposition}
-%   \begin{itemize}
-%   *  Entries marked as \textit{Word},\textit{Phrase} or \textit{Part} (of word)
-%   *  Decomposed into sub-entries 
-%   \begin{itemize}
-%       *  Phrase $\rightarrow$ Words
-%       *  Word $\rightarrow$ Words and/or Parts
-%   \end{itemize}
-%   *  Implemented by RDF list
-%   \begin{itemize}
-%   *  Ordered
-%   \end{itemize}
-%   *  Components may be marked to show necessary form properties
-%   \end{itemize}
-%}
-%
-%\frame{
-%   # Decomposition: example}
-%   \begin{center}
-%   \vspace{7mm}
-%   \includegraphics[width=8cm]{img/description-ex3.png}
-%   \end{center}
-%}
-%
-%\frame{
-%   # Properties}
-%   \imageboxwider{
-%   \begin{itemize}
-%   *  Any element in the lexicon may have properties
-%   *  All propeties are stated as subproperties of _lemon_'s \texttt{property}
-%   *  _lemon_ does not have any such properties or values. A separate ontology is required
-%   \begin{itemize}
-%   *  e.g., ISOcat, GOLD, LexInfo
-%   \end{itemize}
-%   \end{itemize}
-%   }{img/ISOcat_logo.png}
-%}
-%
-%\begin{frame}[fragile]{Properties: example}
-%\vspace{0.5cm}
-%\begin{verbatim}
-%@prefix isocat: <http://www.isocat.org/datcat/> .
-%
-%:katt a lemon:Word ;
-%  lemon:canonicalForm [ 
-%    lemon:writtenRep "katt"@swe ;
-%    isocat:DC-251 isocat:DC-252 ] ; # number=singular
-%  
-%  lemon:otherForm [
-%    lemon:writtenRep "katter"@swe ;
-%    isocat:DC-251 isocat:DC-253 ] . # number=plural
-%
-%isocat:DC-251 rdfs:subPropertyOf lemon:property .
-%\end{verbatim}
-%\end{frame}
-%
-%\frame{
-%# Variation}
-%   \begin{itemize}
-%   *  Forms, Entries and Senses may be marked as variants
-%   *  Again, few _lemon_ properties, mostly use external ontology
-%   *  Mark links as subproperties of \texttt{formVariant},\texttt{lexicalVariant}, \texttt{senseRelation}
-%   *  Sense Relation does have subproperties \texttt{equivalent}, \texttt{broader}, \texttt{narrower},
-%   \texttt{incompatible}
-%   *  Sense Relation can be used to model \texttt{translationOf}
-%   \end{itemize}
-%}
-%
-%\frame{
-%# Variation: example}
-%   \begin{center}
-%   \vspace{7mm}
-%   \includegraphics[width=8cm]{img/variation-ex2.png}
-%   \end{center}
-%}-->
-    
-</div>
-<div id="frames-and-correspondence" class="slide section level1">
-<h1>Frames and Correspondence</h1>
-<ul>
-<li>The verb “know” is always used in a sentence
-<ul>
-<li>“John knows Sebastian”</li>
-</ul></li>
-<li>Similarly <code>foaf:knows</code> is only used in a triple
-<ul>
-<li><code>&lt;http://john.mccr.ae/&gt; foaf:knows &lt;http://aksw.org/SebastianHellmann&gt;</code></li>
-</ul></li>
-<li>It is necessary to state how these corresponds</li>
-</ul>
-</div>
-<div id="frames-and-correspondence-1" class="slide section level1">
-<h1>Frames and Correspondence</h1>
-<div class="leftcol">
-<ul>
-<li>Linguistically we define each word as having a <em>subcategorization frame</em>
-<ul>
-<li>e.g., “X knows Y”</li>
-</ul></li>
-<li>Each RDF property has two arguments
-<ul>
-<li><em>Subject</em></li>
-<li><em>Object</em></li>
-</ul></li>
-<li>We need to state the correspondence of syntactic arguments and semantic arguments
-</div>       
-<div class="rightcol">
-<img src="img/lemon-ex3.png" />
-</div>
-</li>
-</ul>
-</div>
-<div id="ontolex-community-group" class="slide section level1">
-<h1>OntoLex Community Group</h1>
-<ul>
-<li>W3C setup community groups as “an open forum, without fees, where Web developers and other stakeholders develop specifications”</li>
-<li>OntoLex group was set up with the following goals
-<ol style="list-style-type: decimal">
-<li>Develop model for representation of lexica relative to ontologies</li>
-<li>Demonstrate value of representing lexica on the Semantic Web</li>
-<li>Best practices for data categories</li>
-<li>Show improvement in NLP by means of ontology-lexica</li>
-<li>Bring together people working on standards for linguistic information</li>
-<li>Build interoperability between existing models</li>
-</ol></li>
-<li>Chaired by Philipp Cimiano (Uni Bielefeld) and Paul Buitelaar (DERI, Galway)</li>
-<li>78 Participants across 50 institutes</li>
-</ul>
-</div>
-<div id="ontolex-lemon" class="slide section level1">
-<h1>OntoLex Lemon</h1>
-<ul>
-<li>New model using W3C namespace, but (mostly) backwards-compatible</li>
-<li>Introduce new <code>Concept</code> class to describe non-ontological semantics (e.g., “synsets”)</li>
-<li>Modules:
-<ul>
-<li>Syntax and Semantics</li>
-<li>Decomposition</li>
-<li>Variation and Translation</li>
-<li>Metadata</li>
-</ul></li>
-</ul>
-</div>
-<div id="resources-using-lemon" class="slide section level1">
-<h1>Resources using lemon</h1>
-<ul>
-<li>lemonUby (Darmstadt)
-<ul>
-<li>Existing resources, standardized to LMF, and interlinked</li>
-<li>WordNet, FrameNet, VerbNet, OmegaWiki, Wiktionary</li>
-<li>English, German</li>
-</ul></li>
-<li>wiktionary.dbepdia.org (Leipzig)
-<ul>
-<li>Conversion of Wiktionary to <em>lemon</em></li>
-<li>Many languages</li>
-</ul></li>
-<li>PAROLE/SIMPLE Lexicon (Pompeu Fabra, Barcelona)
-<ul>
-<li>English, Spanish, Catalan</li>
-</ul></li>
-<li>DBNary (Grenoble)
-<ul>
-<li>Conversion of Wiktionary to LMF and <em>lemon</em></li>
-<li>French, English and German.</li>
-</ul></li>
-</ul>
-</div>
-<div id="applications-of-lemon" class="slide section level1">
-<h1>Applications of lemon</h1>
-<ul>
-<li>Ontology-based information extraction</li>
-<li>Ontology localization</li>
-<li>Natural language generation</li>
-<li>Integration into NLP pipelines</li>
-<li>Question answering</li>
-</ul>
-</div>
-<div id="summary" class="slide section level1">
-<h1>Summary</h1>
-<ul>
-<li><em>lemon</em> is a proposed model for the ontology-lexicon interface</li>
-<li>Soon to be a W3C Vocabulary under the OntoLex CG</li>
-<li>Concise, modular, extensible RDF(S) model</li>
-<li>Yet, still linguistically sophisticated</li>
-<li>Already in use</li>
-</ul>
-</div>
-<div id="section" class="slide section level1">
-<h1> </h1>
-<div class="hbox" style="height:500px";>
-<div style="font-size:300%;text-align:center;position:relative;top:40%;">
-WordNet-RDF
-</div>
-</div>
-
+  <p class="date">♣Semantic Computing Group, University of Bielefeld. ♦Princeton University</p>
 </div>
 <div id="what-is-wordnet" class="slide section level1">
 <h1>What is WordNet?</h1>
@@ -719,6 +167,70 @@ WordNet-RDF
 <li>Not updated with new releases</li>
 </ul></li>
 </ul>
+</div>
+<div id="so...-what-is-a-ontology-lexicon" class="slide section level1">
+<h1>So..., what is a (ontology-)lexicon?</h1>
+<div class="leftcol">
+<ul>
+<li>A lexicon is a collection of lexical information</li>
+<li>We do not need to define semantics within the lexicon</li>
+<li>“An ontology-based semantic lexicon would leave the semantics to the ontology, focusing instead on providing domain-specific terms and object descriptions in the ontology.” (Buitelaar, 2010)
+</div>
+<div class="rightcol">
+<img src="img/core2.png" />
+</div> 
+</li>
+</ul>
+</div>
+<div id="lemon-design-goals" class="slide section level1">
+<h1><em>lemon</em> Design goals</h1>
+<ul>
+<li>RDF(S)</li>
+<li>Conciseness</li>
+<li>Not prescriptive
+<ul>
+<li>i.e., uses data categories</li>
+</ul></li>
+<li>Semantics by reference
+<ul>
+<li>i.e., uses ontologies</li>
+</ul></li>
+<li>Extensible</li>
+</ul>
+</div>
+<div id="forms" class="slide section level1">
+<h1>Forms</h1>
+<div>
+<em>lemon</em> allows us to distinguish between different forms:
+</div>
+<div style="padding:30px;position:relative;left:100px;">
+<span style="padding:30px;"> <em>“edema”</em> (<strong>singular</strong>) </span> <span style="padding:30px;"> <em>“edemata”</em> (<strong>plural</strong>) </span>
+</div>
+<div>
+Hence, forms are also nodes:
+</div>
+<div class="hbox">
+<img src="img/ex-lemon-forms.png" />
+</div>
+
+
+
+</div>
+<div id="senses" class="slide section level1">
+<h1>Senses</h1>
+<div>
+<em>lemon</em> allows us to say something about why a particular word is used
+</div>
+<div style="padding:30px;position:relative;left:100px;">
+<span style="padding:30px;"> <em>“edema”</em> (<strong>modern</strong>) </span> <span style="padding:30px;"> <em>“dropsy”</em> (<strong>antiquated</strong>) </span>
+</div>
+<div>
+Hence we introduce a sense to describe the usage of a word with a given meaning
+</div>
+<div class="hbox">
+<img src="img/ex-lemon-senses.png" />
+</div>
+
 </div>
 <div id="lemon-and-wordnet" class="slide section level1">
 <h1><em>lemon</em> and WordNet</h1>
@@ -848,7 +360,7 @@ http://wordnet-rdf.princeton.edu/wn31/hotel-n
 </div>
 
 </div>
-<div id="summary-1" class="slide section level1">
+<div id="summary" class="slide section level1">
 <h1>Summary</h1>
 <ul>
 <li>First Princeton WordNet version</li>
@@ -859,6 +371,7 @@ http://wordnet-rdf.princeton.edu/wn31/hotel-n
 <li>Linked already to many resources</li>
 <li>Includes extra data (e.g., translations) from other open licensed resources</li>
 </ul>
+<p>These slides <a href="http://jmccrae.github.io/wn-rdf-paper/slides/slides.html">http://jmccrae.github.io/wn-rdf-paper/slides/slides.html</a> (CC-BY)</p>
 </div>
 </body>
 </html>

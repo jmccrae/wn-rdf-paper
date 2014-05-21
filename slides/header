@@ -63,10 +63,10 @@ div.shbox img {
 
 .leftcol { float:left;max-width:50%; }
 .rightcol { float:right;max-width:48%; }
-.rightcol img { padding-top:50px;padding-right:200px; }
+.rightcol img { padding-top:50px;padding-right:200px;max-width:90%;}
 
 </style>
-<meta name="copyright" content="Linked Data for Language Technologies - Tutorial at LREC-2014">
+<meta name="copyright" content="Publishing and Linking WordNet using lemon and RDF">
 <script type="text/javascript">
 window.onload = function() {
 var background_slide = document.createElement("div");
